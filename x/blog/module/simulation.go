@@ -1,9 +1,13 @@
 package blog
 
 import (
+	"math/rand"
+
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
+	"github.com/cosmos/cosmos-sdk/x/simulation"
 
+	blogsimulation "github.com/atila-merry/cosmos-sdk-tutorial/x/blog/simulation"
 	"github.com/atila-merry/cosmos-sdk-tutorial/x/blog/types"
 )
 
@@ -25,6 +29,22 @@ func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 // WeightedOperations returns the all the gov module operations with their respective weights.
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
+	const (
+		opWeightMsgIncrement          = "op_weight_msg_blog"
+		defaultWeightMsgIncrement int = 100
+	)
+
+	var weightMsgIncrement int
+	simState.AppParams.GetOrGenerate(opWeightMsgIncrement, &weightMsgIncrement, nil,
+		func(_ *rand.Rand) {
+			weightMsgIncrement = defaultWeightMsgIncrement
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgIncrement,
+		blogsimulation.SimulateMsgIncrement(am.authKeeper, am.bankKeeper, am.keeper, simState.TxConfig),
+	))
+
 	return operations
 }
 

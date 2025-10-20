@@ -28,6 +28,12 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "UpdateParams",
 					Skip:      true, // skipped because authority gated
 				},
+				{
+					RpcMethod:      "Increment",
+					Use:            "increment [count]",
+					Short:          "Send a increment tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "count"}},
+				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},
