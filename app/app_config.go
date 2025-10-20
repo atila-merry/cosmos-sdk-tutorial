@@ -36,6 +36,8 @@ import (
 	_ "cosmossdk.io/x/nft/module" // import for side-effects
 	_ "cosmossdk.io/x/upgrade"    // import for side-effects
 	upgradetypes "cosmossdk.io/x/upgrade/types"
+	_ "github.com/atila-merry/cosmos-sdk-tutorial/x/blog/module"
+	blogmoduletypes "github.com/atila-merry/cosmos-sdk-tutorial/x/blog/types"
 	_ "github.com/atila-merry/cosmos-sdk-tutorial/x/cosmossdktutorial/module"
 	cosmossdktutorialmoduletypes "github.com/atila-merry/cosmos-sdk-tutorial/x/cosmossdktutorial/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
@@ -126,6 +128,7 @@ var (
 						ibcexported.ModuleName,
 						// chain modules
 						cosmossdktutorialmoduletypes.ModuleName,
+						blogmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -135,6 +138,7 @@ var (
 						group.ModuleName,
 						// chain modules
 						cosmossdktutorialmoduletypes.ModuleName,
+						blogmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -172,6 +176,7 @@ var (
 						icatypes.ModuleName,
 						// chain modules
 						cosmossdktutorialmoduletypes.ModuleName,
+						blogmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 				}),
@@ -271,6 +276,10 @@ var (
 			{
 				Name:   cosmossdktutorialmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&cosmossdktutorialmoduletypes.Module{}),
+			},
+			{
+				Name:   blogmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&blogmoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

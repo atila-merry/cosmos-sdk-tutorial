@@ -46,6 +46,7 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
 
 	"github.com/atila-merry/cosmos-sdk-tutorial/docs"
+	blogmodulekeeper "github.com/atila-merry/cosmos-sdk-tutorial/x/blog/keeper"
 	cosmossdktutorialmodulekeeper "github.com/atila-merry/cosmos-sdk-tutorial/x/cosmossdktutorial/keeper"
 )
 
@@ -101,6 +102,7 @@ type App struct {
 	// simulation manager
 	sm                      *module.SimulationManager
 	CosmossdktutorialKeeper cosmossdktutorialmodulekeeper.Keeper
+	BlogKeeper              blogmodulekeeper.Keeper
 }
 
 func init() {
@@ -174,6 +176,7 @@ func New(
 		&app.CircuitBreakerKeeper,
 		&app.ParamsKeeper,
 		&app.CosmossdktutorialKeeper,
+		&app.BlogKeeper,
 	); err != nil {
 		panic(err)
 	}
